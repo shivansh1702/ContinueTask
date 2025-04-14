@@ -246,18 +246,33 @@ class LoginOptionsViewController: UIViewController {
     }
     
     @objc func handleAppleLogin() {
-        let alert = UIAlertController(title: "Apple login failed", message: "Try again or use Google/Email.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+        activityIndicator.startAnimating()
+        view.isUserInteractionEnabled = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {[weak self] in
+            let alert = UIAlertController(title: "Apple login failed", message: "Try again or use Google/Email.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self?.present(alert, animated: true, completion: { [weak self] in
+                self?.activityIndicator.stopAnimating()
+                self?.view.isUserInteractionEnabled = true
+            })
+        }
     }
     
     @objc func handleContinueTap() {
+        let _ = textFieldShouldReturn(emailField)
         if (emailField.text?.count ?? 0) > 0 {
-            let _ = textFieldShouldReturn(self.emailField)
-            let alert = UIAlertController(title: "E-Mail login failed. ", message: "Try again later or use Google/Apple Login.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            present(alert, animated: true)
-        } else {
+            self.activityIndicator.startAnimating()
+            view.isUserInteractionEnabled = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {[weak self] in
+                let alert = UIAlertController(title: "E-Mail login failed. ", message: "Try again later or use Google/Apple Login.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self?.present(alert, animated: true, completion: { [weak self] in
+                    self?.activityIndicator.stopAnimating()
+                    self?.view.isUserInteractionEnabled = true
+                })
+            }
+        }else {
             let alert = UIAlertController(title: "Please enter Email to continue", message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default))
             present(alert, animated: true)
