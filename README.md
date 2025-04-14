@@ -7,6 +7,7 @@ in using Google once and sets Home View Controller as Root View Controller.
 -(might require a reinstall if initially logged in with Google option.)
 
 🧱 Project Structure
+
 ViewController.swift
 This is the initial view controller that welcomes users and presents them with two options:
 "I have a device": Opens the login screen modally.
