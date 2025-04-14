@@ -1,6 +1,7 @@
 # ContinueTask
 
 -Kindly, use software keyboard toggle for EMAIL text field text entering(for UI update).
+
 -The Launch Manager maintains a User Defaults property to check whether the user has logged
 in using Google once and sets Home View Controller as Root View Controller.
 
